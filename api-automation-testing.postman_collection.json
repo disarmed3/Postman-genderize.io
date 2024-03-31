@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "3d1cef17-731b-4de0-a502-6a04b44742d7",
+		"name": "api-automation-testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32759489"
+	},
+	"item": [
+		{
+			"name": "SCENARIO 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Step 1: Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Step 2: Check data types\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(typeof jsonData.name).to.eql('string');\r",
+							"    pm.expect(typeof jsonData.gender).to.eql('string');\r",
+							"    pm.expect(typeof jsonData.probability).to.eql('number');\r",
+							"    pm.expect(typeof jsonData.count).to.eql('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Step 3: Check variable values\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql('maria');\r",
+							"    pm.expect(jsonData.gender).to.eql('female');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}name=maria",
+					"host": [
+						"{{base_url}}name=maria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SCENARIO 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Step 1: Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Step 2: Check if response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Step 3: Check values of first two JSON objects in array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].name).to.eql('peter');\r",
+							"    pm.expect(jsonData[0].gender).to.eql('male');\r",
+							"    pm.expect(jsonData[1].name).to.eql('maria');\r",
+							"    pm.expect(jsonData[1].gender).to.eql('female');\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}name[]=peter&name[]=maria",
+					"host": [
+						"{{base_url}}name[]=peter&name[]=maria"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
